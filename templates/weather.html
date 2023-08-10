@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check the weather</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="parallax-bg"></div>
+    <div class="container-main">
+      <h1>Check the weather</h1>
+      <form action="{{ url_for('weather') }}" method="post">
+        <div class="weather-input">
+          <input type="text" name="cityInput" placeholder="Enter name of the city">
+          <button class="button-check" type="submit">Check</button>
+        </div>
+      </form>
+
+      <form action="{{ url_for('toggle_view') }}" method="post">
+        <input type="hidden" name="cityInput" value="{{ cityInput }}">
+          <div class="form-buttons">
+            {% if view == 'daily' %}
+              <button class="button-view" type="submit" name="view" value="hourly">48 hour view</button>
+            {% elif view == 'hourly' %}
+              <button class="button-view" type="submit" name="view" value="daily">7 day view</button>
+            {% endif %}
+          </div>
+      </form>
+    </div>
+
+  {% if view == 'daily' %}
+    <div class="container-weather">
+      <h1>7 day weather for {{ cityInput }}</h1>
+      <div class="hidden-table">
+        <table>
+          <tr>
+            {% for day_data in weather_data['daily'] %}
+            <td>
+              <div class="day-details">
+                <strong class="day-name">{{ day_data['dt']|get_day_name }}</strong><br>
+                <span>{{ day_data['dt']|format_epoch_to_date }}</span><br>
+                <span class="temperature">{{ day_data['temp']['day']|round|int }}°C</span><br>
+                {{ day_data['weather'][0]['description'] }}<br>
+                <img src="https://openweathermap.org/img/wn/{{ day_data['weather'][0]['icon'] }}@2x.png" alt="Weather Icon"><br>
+                <strong>Min:</strong> {{ day_data['temp']['min']|round|int }}°C<br>
+                <strong>Max:</strong> {{ day_data['temp']['max']|round|int }}°C<br>
+              </div>
+            </td>
+            {% endfor %}
+          </tr>
+        </table>
+      </div>
+    </div>
+  {% elif view == 'hourly' %}
+    <div class="container-hourly">
+      <h1>48 hour weather for {{ cityInput }}</h1>
+      <div class="hidden-table">
+        <table>
+          {% for hour_data in weather_data['hourly'] %}
+          <tr>
+            <td class="td-daily"><span class="day-name">{{ hour_data['dt']|get_day_name }}</span><br></td>
+            <td class="td-daily"><strong class="day-name">{{ hour_data['dt']|format_epoch_to_time }}</strong><br></td>
+            <td class="td-daily"><span class="temperature">{{ hour_data['temp']|round|int }}°C</span><br></td>
+            <td class="td-daily">{{ hour_data['weather'][0]['description'] }}<br></td>
+            <td class="td-daily"><img src="https://openweathermap.org/img/wn/{{ hour_data['weather'][0]['icon'] }}@2x.png" alt="Weather Icon" width="50%" height="50%"><br></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  {% endif %}
+
+</body>
+</html>

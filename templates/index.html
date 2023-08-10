@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check the weather</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="parallax-bg"></div>
+    <div class="container-main">
+      <h1>Check the weather</h1>
+        {% if error_message %}
+          <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+      <form action="{{ url_for('weather') }}" method="post">
+        <div class="weather-input">
+          <input type="text" name="cityInput" placeholder="Enter name of the city">
+          <button class="button-check" type="submit">Check</button>
+        </div>
+      </form>
+    </div>
+</body>
+</html>
