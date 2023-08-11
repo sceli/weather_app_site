@@ -6,6 +6,8 @@ import datetime
 import os
 
 
+OWM_API_KEY = os.getenv("OWM_API_KEY")
+
 app = Flask(__name__)
 env = Environment(loader=FileSystemLoader("templates"), autoescape=select_autoescape(['html', 'xml']))
 
