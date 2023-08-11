@@ -32,7 +32,7 @@ app.add_template_filter(get_day_name)
 
 # Api endpoint
 OWM_Endpoint = "https://api.openweathermap.org/data/2.5/onecall"
-api_key = ""   # Paste your api key here from https://openweathermap.org
+api_key = OWM_API_KEY   # Paste your api key here from https://openweathermap.org
 
 is_response_200 = True
 
