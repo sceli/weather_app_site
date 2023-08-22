@@ -1,6 +1,6 @@
 # Weather app site
 
-Website where you can check the current weather for the next 7 days and for the next 48 hours, hour by hour. 
+Web app where you can check the current weather for the next 7 days and for the next 48 hours, hour by hour. 
 
 The website first retrieves the location data provided by the user via the API call from https://nominatim.openstreetmap.org in JSON format message and returns the latitude and longitude. It then passes the location data via API call to https://openweathermap.org and retrieves the weather data in JSON format.
 
